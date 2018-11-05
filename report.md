@@ -40,12 +40,45 @@ class QNetwork(nn.Module):
 ```
 
 #### Double DQN
+```
+def learn(self, experiences, gamma, TAU):
+        states, actions, rewards, next_states, dones = experiences
 
+        # Calculate target value
+        self.qnetwork_target.eval()
+        with torch.no_grad():
+            Q_local = self.qnetwork_local(next_states)
+            Q_target = self.qnetwork_target(next_states)
+            argmax_action = torch.max(Q_local, dim=1, keepdim=True)[1]
+            Q_max = Q_target.gather(1, argmax_action)
+            y = rewards + gamma * Q_max * (1 - dones)
+        self.qnetwork_target.train()
+
+        # Predict Q-value
+        self.optimizer.zero_grad()
+        Q = self.qnetwork_local(states)
+        y_pred = Q.gather(1, actions)
+
+        # TD-error
+        loss = torch.sum((y - y_pred)**2)
+
+        # Optimize
+        loss.backward()
+        self.optimizer.step()
+
+        self.soft_update(self.qnetwork_local, self.qnetwork_target, TAU)  
+```
 
 ### Hyperparameters
+```
 
+```
 ### Neural network model architecture
 
 ### Plot of rewards per episode
+![Plot](/images/DQNagent.PNG)
 
 ### Further improvements
+As discussed during the class, to further improve the agent, I should implement a rainbow algorithm. The rainbow algorithm implements Double DNW, Dueling DQN and Prioritized experience replay as I did. In addition to that, it implements multi-step bootstrap targets, Distributional DQN and Noisy DQN.
+We can see in the image how it performs in respect to the other approaches.
+![Rainbow](/images/Rainbow.png)
