@@ -87,7 +87,10 @@ I used a simple architecture.
 Starting from the inputs is connected to a fully connected layers of size 64, that is connected to a fully connected layer of size 32 that splits into two layers of size 32 and 4 (`action_size`) that they converge in the output layer of size 4. I used a ReLU activation over all the neural network.
 
 ### Plot of rewards per episode
-![Plot](/images/DQNagent.PNG)
+#### Plot 1
+![Plot1](/images/DQNagent.PNG)
+#### Plot 2
+![Plot2](/images/DQNagent2.PNG)
 
 ### Further improvements
 As discussed during the class, to further improve the agent, I should implement a rainbow algorithm. The rainbow algorithm implements Double DNW, Dueling DQN and Prioritized experience replay as I did. In addition to that, it implements multi-step bootstrap targets, Distributional DQN and Noisy DQN.
