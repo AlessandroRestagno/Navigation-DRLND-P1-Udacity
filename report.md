@@ -5,6 +5,7 @@ The objective of this project is to collect as many yellow bananas as possible, 
 As a starting point I used a Deep Q-Network agent with Prioritized Experience Replay as proposed during the class in the Lunar Lender project. To further improve the algorithm I adopted the Double DQN approach (to compensate overestimation of Q values) and the Dueling approach (to better understand the connection between initial state, action and rewards).
 
 #### Dueling DQN
+Code implementation of Dueling DQN in [model.py](model.py).
 ```
 class QNetwork(nn.Module):
     """Actor (Policy) Model."""
@@ -40,6 +41,7 @@ class QNetwork(nn.Module):
 ```
 
 #### Double DQN
+Code implementation of Double DQN in [dqn_agent.py](dqn_agent.py)
 ```
 def learn(self, experiences, gamma, TAU):
         states, actions, rewards, next_states, dones = experiences
@@ -70,10 +72,19 @@ def learn(self, experiences, gamma, TAU):
 ```
 
 ### Hyperparameters
+At the beginning, epsilon is equals to 1.0. Overtime it decays slowly till it reaches 0.01. Doing so, the agent will explore more in the first episodes and, then, it will focus on explotation after few hundreds episodes. 
+The other hyperparameters are set as proposed in the Lunar Lender project:
 ```
-
+BUFFER_SIZE = int(1e5)  # replay buffer size
+BATCH_SIZE = 64         # minibatch size
+GAMMA= 0.99            # discount factor
+TAU = 1e-3              # for soft update of target parameters
+LR = 5e-4               # learning rate 
+UPDATE_EVERY = 4        # how often to update the network
 ```
 ### Neural network model architecture
+I used a simple architecture.
+Starting from the inputs is connected to a fully connected layers of size 64, that is connected to a fully connected layer of size 32 that splits into two layers of size 32 and 4 (`action_size`) that they converge in the output layer of size 4. I used a ReLU activation over all the neural network.
 
 ### Plot of rewards per episode
 ![Plot](/images/DQNagent.PNG)
@@ -81,4 +92,4 @@ def learn(self, experiences, gamma, TAU):
 ### Further improvements
 As discussed during the class, to further improve the agent, I should implement a rainbow algorithm. The rainbow algorithm implements Double DNW, Dueling DQN and Prioritized experience replay as I did. In addition to that, it implements multi-step bootstrap targets, Distributional DQN and Noisy DQN.
 We can see in the image how it performs in respect to the other approaches.
-![Rainbow](/images/Rainbow.png | width=100)
+![Rainbow](/images/Rainbow.png)
