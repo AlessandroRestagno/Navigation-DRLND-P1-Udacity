@@ -81,4 +81,4 @@ def learn(self, experiences, gamma, TAU):
 ### Further improvements
 As discussed during the class, to further improve the agent, I should implement a rainbow algorithm. The rainbow algorithm implements Double DNW, Dueling DQN and Prioritized experience replay as I did. In addition to that, it implements multi-step bootstrap targets, Distributional DQN and Noisy DQN.
 We can see in the image how it performs in respect to the other approaches.
-![Rainbow](/images/Rainbow.png)
+![Rainbow](/images/Rainbow.png =250x)
